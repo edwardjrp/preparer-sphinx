@@ -3,9 +3,9 @@ FROM 172.16.221.48:5000/tesla-images/jenkins-slave-python:3.6
 MAINTAINER Edward Rodriguez <Edward.Rodriguez@rackspace.com>
 
 ENV SUMMARY="Platform for building and running preparer-sphynx deconst application." \
-    DESCRIPTION="This is a Source-to-Image (S2I) base image, based on jenkins-slave-python:3.6 with Ruby ${RUBY_VERSION} \
-installed. It's primary use is to create a \"dockerized\" version of your application source code in nodejs. However, this image \
-fully supports all the S2I functions. Its main purpose is to add ruby support from a nodejs slave"
+    DESCRIPTION="This is a Source-to-Image (S2I) base image, based on jenkins-slave-python:3.6 \
+installed. It's primary use is to create a \"dockerized\" version preparer-sphynx. However, this image \
+fully supports all the S2I functions. Its main purpose is have preparer-sphynx as a jenkins slave runtime"
 
 USER root
 
