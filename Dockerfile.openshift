@@ -1,0 +1,39 @@
+FROM 172.16.221.48:5000/tesla-images/jenkins-slave-python:3.6
+
+MAINTAINER Edward Rodriguez <Edward.Rodriguez@rackspace.com>
+
+ENV SUMMARY="Platform for building and running preparer-sphynx deconst application." \
+    DESCRIPTION="This is a Source-to-Image (S2I) base image, based on jenkins-slave-python:3.6 with Ruby ${RUBY_VERSION} \
+installed. It's primary use is to create a \"dockerized\" version of your application source code in nodejs. However, this image \
+fully supports all the S2I functions. Its main purpose is to add ruby support from a nodejs slave"
+
+USER root
+
+# RUN mkdir -p /preparer /venv /usr/content-repo && \
+#     chown -R 1001:1001 /preparer /venv && \
+#     pyvenv /venv
+# ENV PATH=/venv/bin:${PATH}
+RUN mkdir -p /opt/app-root/src/content-repo && \
+    chown -R 1001:0 /opt/app-root/src/content-repo
+
+VOLUME /opt/app-root/src/content-repo
+# WORKDIR /usr/content-repo
+
+# COPY ./requirements.txt /opt/app-root/src/requirements.txt
+# RUN pip install --upgrade pip &&\
+#   pip install -r /preparer/requirements.txt
+
+COPY . /opt/app-root/src
+RUN pip install -r /opt/app-root/src/requirements.txt
+
+
+# NOTES: The preparer code will be built from an s2i approach based on this image
+# NOTES: because creating an s2i based image from tesla-images/jenkins-slave-python:3.6
+# NOTES: fails pulling the image from that namespace lately, this might be permission related
+# NOTES: and is pending response from rsi sec team.
+
+# NOTES: This is a jenkins slave based image and cmd may interfer with 
+# NOTES: jenkins JNLP protocol to laungh the container and be found as a slave
+# CMD ["python", "-m", "deconstrst"]
+
+USER 1001
