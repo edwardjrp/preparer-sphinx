@@ -24,8 +24,8 @@ VOLUME /opt/app-root/src/content-repo
 #   pip install -r /preparer/requirements.txt
 
 COPY . /opt/app-root/src
-RUN pip install -r /opt/app-root/src/requirements.txt
-
+RUN pip install --upgrade pip && \
+    pip install -r /opt/app-root/src/requirements.txt
 
 # NOTES: The preparer code will be built from an s2i approach based on this image
 # NOTES: because creating an s2i based image from tesla-images/jenkins-slave-python:3.6
